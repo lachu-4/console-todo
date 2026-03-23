@@ -1,7 +1,6 @@
 import { useState } from "react";
-import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { collection, addDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
-import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -22,7 +21,6 @@ import {
 import { Plus } from "lucide-react";
 
 const NewTaskDialog = () => {
-  const { user } = useAuth();
   const [open, setOpen] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -31,7 +29,7 @@ const NewTaskDialog = () => {
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async () => {
-    if (!title.trim() || !user) return;
+    if (!title.trim()) return;
     setLoading(true);
     try {
       await addDoc(collection(db, "tasks"), {
@@ -41,7 +39,6 @@ const NewTaskDialog = () => {
         priority,
         dueDate: dueDate || null,
         createdAt: Date.now(),
-        userId: user.uid,
       });
       setTitle("");
       setDescription("");
@@ -68,35 +65,18 @@ const NewTaskDialog = () => {
           <DialogTitle>Create New Task</DialogTitle>
         </DialogHeader>
         <div className="space-y-4 mt-4">
-          <Input
-            placeholder="Task title..."
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            className="bg-input border-border"
-          />
-          <Textarea
-            placeholder="Description (optional)"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            className="bg-input border-border"
-          />
+          <Input placeholder="Task title..." value={title} onChange={(e) => setTitle(e.target.value)} className="bg-input border-border" />
+          <Textarea placeholder="Description (optional)" value={description} onChange={(e) => setDescription(e.target.value)} className="bg-input border-border" />
           <div className="flex gap-3">
             <Select value={priority} onValueChange={setPriority}>
-              <SelectTrigger className="bg-input border-border">
-                <SelectValue placeholder="Priority" />
-              </SelectTrigger>
+              <SelectTrigger className="bg-input border-border"><SelectValue placeholder="Priority" /></SelectTrigger>
               <SelectContent>
                 <SelectItem value="low">Low</SelectItem>
                 <SelectItem value="medium">Medium</SelectItem>
                 <SelectItem value="high">High</SelectItem>
               </SelectContent>
             </Select>
-            <Input
-              type="date"
-              value={dueDate}
-              onChange={(e) => setDueDate(e.target.value)}
-              className="bg-input border-border"
-            />
+            <Input type="date" value={dueDate} onChange={(e) => setDueDate(e.target.value)} className="bg-input border-border" />
           </div>
           <Button onClick={handleSubmit} disabled={loading || !title.trim()} className="w-full">
             {loading ? "Creating..." : "Create Task"}
