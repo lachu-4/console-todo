@@ -39,7 +39,9 @@ const Dashboard = () => {
       where("userId", "==", user.uid)
     );
     const unsub = onSnapshot(q, (snap) => {
-      const data = snap.docs.map((d) => ({ id: d.id, ...d.data() } as Task));
+      const data = snap.docs
+        .map((d) => ({ id: d.id, ...d.data() } as Task))
+        .sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
       setTasks(data);
     });
     return unsub;
