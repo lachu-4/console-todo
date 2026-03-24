@@ -16,6 +16,7 @@ interface AuthContextType {
   logout: () => Promise<void>;
 }
 
+// Auth context for email/password authentication
 const AuthContext = createContext<AuthContextType | null>(null);
 
 export const useAuth = () => {
