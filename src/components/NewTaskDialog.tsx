@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
+import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -21,6 +22,7 @@ import {
 import { Plus } from "lucide-react";
 
 const NewTaskDialog = () => {
+  const { user } = useAuth();
   const [open, setOpen] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -39,6 +41,7 @@ const NewTaskDialog = () => {
         priority,
         dueDate: dueDate || null,
         createdAt: Date.now(),
+        userId: user?.uid || "",
       });
       setTitle("");
       setDescription("");

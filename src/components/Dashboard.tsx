@@ -7,8 +7,10 @@ import {
   updateDoc,
   deleteDoc,
   orderBy,
+  where,
 } from "firebase/firestore";
 import { db } from "@/lib/firebase";
+import { useAuth } from "@/contexts/AuthContext";
 import { Task } from "@/types/task";
 import { TrendingUp, Calendar, Search, Trash2, Check } from "lucide-react";
 import { Input } from "@/components/ui/input";
@@ -24,14 +26,17 @@ import { Badge } from "@/components/ui/badge";
 import NewTaskDialog from "@/components/NewTaskDialog";
 
 const Dashboard = () => {
+  const { user } = useAuth();
   const [tasks, setTasks] = useState<Task[]>([]);
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
   const [priorityFilter, setPriorityFilter] = useState("all");
 
   useEffect(() => {
+    if (!user) return;
     const q = query(
       collection(db, "tasks"),
+      where("userId", "==", user.uid),
       orderBy("createdAt", "desc")
     );
     const unsub = onSnapshot(q, (snap) => {
@@ -39,7 +44,7 @@ const Dashboard = () => {
       setTasks(data);
     });
     return unsub;
-  }, []);
+  }, [user]);
 
   const filtered = useMemo(() => {
     return tasks.filter((t) => {
