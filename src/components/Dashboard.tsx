@@ -7,8 +7,10 @@ import {
   updateDoc,
   deleteDoc,
   orderBy,
+  where,
 } from "firebase/firestore";
 import { db } from "@/lib/firebase";
+import { useAuth } from "@/contexts/AuthContext";
 import { Task } from "@/types/task";
 import { TrendingUp, Calendar, Search, Trash2, Check } from "lucide-react";
 import { Input } from "@/components/ui/input";
