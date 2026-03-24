@@ -41,6 +41,7 @@ const NewTaskDialog = () => {
         priority,
         dueDate: dueDate || null,
         createdAt: Date.now(),
+        userId: user?.uid || "",
       });
       setTitle("");
       setDescription("");
