@@ -22,6 +22,7 @@ import {
 import { Plus } from "lucide-react";
 
 const NewTaskDialog = () => {
+  const { user } = useAuth();
   const [open, setOpen] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
