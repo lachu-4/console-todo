@@ -81,46 +81,46 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="flex-1 px-6 md:px-12 py-6 space-y-6">
+    <div className="flex-1 px-4 md:px-12 py-4 md:py-6 space-y-4 md:space-y-6 overflow-x-hidden">
       {/* Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="glass-card p-5">
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
+        <div className="glass-card p-4 md:p-5 col-span-2 md:col-span-1">
           <div className="flex items-center justify-between mb-3">
             <span className="text-xs font-semibold tracking-widest uppercase text-muted-foreground">Progress</span>
             <TrendingUp className="w-4 h-4 text-success" />
           </div>
-          <p className="text-3xl font-bold">{progress}% <span className="text-sm font-normal text-muted-foreground">completed</span></p>
+          <p className="text-2xl md:text-3xl font-bold">{progress}% <span className="text-sm font-normal text-muted-foreground">completed</span></p>
           <div className="mt-3 h-1.5 rounded-full bg-secondary">
             <div className="h-full rounded-full bg-muted-foreground transition-all" style={{ width: `${progress}%` }} />
           </div>
         </div>
-        <div className="glass-card p-5">
-          <div className="flex items-center justify-between mb-3">
+        <div className="glass-card p-4 md:p-5">
+          <div className="flex items-center justify-between mb-2 md:mb-3">
             <span className="text-xs font-semibold tracking-widest uppercase text-muted-foreground">Streak</span>
             <TrendingUp className="w-4 h-4 text-warning" />
           </div>
-          <p className="text-3xl font-bold">{completed} <span className="text-sm font-normal text-muted-foreground">tasks done</span></p>
-          <p className="text-xs text-muted-foreground mt-2">Keep it up! You're on fire.</p>
+          <p className="text-2xl md:text-3xl font-bold">{completed} <span className="text-xs md:text-sm font-normal text-muted-foreground">done</span></p>
+          <p className="text-xs text-muted-foreground mt-1 md:mt-2 hidden sm:block">Keep it up!</p>
         </div>
-        <div className="glass-card p-5">
-          <div className="flex items-center justify-between mb-3">
+        <div className="glass-card p-4 md:p-5">
+          <div className="flex items-center justify-between mb-2 md:mb-3">
             <span className="text-xs font-semibold tracking-widest uppercase text-muted-foreground">Upcoming</span>
             <Calendar className="w-4 h-4 text-info" />
           </div>
-          <p className="text-3xl font-bold">{upcoming} <span className="text-sm font-normal text-muted-foreground">due soon</span></p>
-          <p className="text-xs text-muted-foreground mt-2">Focus on what matters most.</p>
+          <p className="text-2xl md:text-3xl font-bold">{upcoming} <span className="text-xs md:text-sm font-normal text-muted-foreground">due soon</span></p>
+          <p className="text-xs text-muted-foreground mt-1 md:mt-2 hidden sm:block">Focus on what matters.</p>
         </div>
       </div>
 
       {/* Filters */}
-      <div className="glass-card p-4 flex flex-col md:flex-row gap-3 items-center">
+      <div className="glass-card p-3 md:p-4 space-y-3 md:space-y-0 md:flex md:flex-row md:gap-3 md:items-center">
         <div className="relative flex-1 w-full">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
           <Input placeholder="Search tasks..." value={search} onChange={(e) => setSearch(e.target.value)} className="pl-10 bg-input border-border" />
         </div>
-        <div className="flex gap-3 items-center">
+        <div className="flex gap-2 md:gap-3 items-center w-full md:w-auto">
           <Select value={statusFilter} onValueChange={setStatusFilter}>
-            <SelectTrigger className="w-[130px] bg-input border-border"><SelectValue /></SelectTrigger>
+            <SelectTrigger className="flex-1 md:w-[130px] bg-input border-border text-sm"><SelectValue /></SelectTrigger>
             <SelectContent>
               <SelectItem value="all">All Status</SelectItem>
               <SelectItem value="todo">Todo</SelectItem>
@@ -129,7 +129,7 @@ const Dashboard = () => {
             </SelectContent>
           </Select>
           <Select value={priorityFilter} onValueChange={setPriorityFilter}>
-            <SelectTrigger className="w-[130px] bg-input border-border"><SelectValue /></SelectTrigger>
+            <SelectTrigger className="flex-1 md:w-[130px] bg-input border-border text-sm"><SelectValue /></SelectTrigger>
             <SelectContent>
               <SelectItem value="all">All Priority</SelectItem>
               <SelectItem value="high">High</SelectItem>
